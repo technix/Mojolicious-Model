@@ -1,0 +1,17 @@
+{
+"db" : {
+    "dsn" : "DBI:mysql:database_name:localhost:3306:mysql_server_prepare=1",
+    "username" : "user",
+    "password" : "password",
+    "no_disconnect" : 1,
+    "dbi_attr" : {
+        "AutoCommit" : 1,
+        "RaiseError" : 1,
+        "PrintError" : 0
+    },
+    "on_connect_do" : [
+        "SET NAMES UTF8"
+    ],
+    "requests_per_connection" : 200
+}
+}
