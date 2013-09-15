@@ -33,11 +33,11 @@ sub register {
     
     # create default model helper
     $app->helper($model_helper => sub {
-        my ($app, $m) = @_;
+        my ($self, $m) = @_;
         if (exists $mojo_models{$m}) {
             return $mojo_models{$m};
         } else {
-            $app->log->error("Model $m not found!");
+            $self->app->log->error("Model $m not found!");
         }
         return;
     });
