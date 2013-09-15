@@ -24,12 +24,16 @@ sub register {
     foreach my $pkg (@{$packages}) {
         Mojo::Loader->load($pkg);
         $pkg =~ /^${namespace}::(.+?)$/ and my $model = $1;
-        eval "\$dbix_models{$model} = $pkg->new( \$app )";
+        eval
+            "\$mojo_models{$model} = $pkg->new( \$app )"
+        or do {
+            die $@;
+        };
     }
     
     # create default model helper
     $app->helper($model_helper => sub {
-        my $m = shift;
+        my ($app, $m) = @_;
         if (exists $mojo_models{$m}) {
             return $mojo_models{$m};
         } else {
@@ -41,7 +45,7 @@ sub register {
     # create named model helpers
     if ($args->{'use_names'}) {
         foreach my $model (keys %mojo_models) {
-            (my $model_name = $model) =~ s/::/_/g;            
+            (my $model_name = $model) =~ s/::/_/g;
             $app->helper($model_name => sub { $mojo_models{$model} });
         }
     }
