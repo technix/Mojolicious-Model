@@ -1,6 +1,6 @@
 package SampleApp::Model::User;
 use lib "../..";
-use parent Mojolicious::DbixModel;
+use parent 'Mojolicious::DbixModel';
 use strict;
 
 sub table {
@@ -9,8 +9,8 @@ sub table {
 
 sub list {
     my ($self) = @_;
-    my @users = $self->db->iquery('SELECT * FROM users WHERE 1')->hashes;
-    return \@users;
+    my @users = $self->db->iquery('SELECT * FROM users WHERE 1 ORDER BY id')->hashes;
+    return @users;
 }
 
 1;
