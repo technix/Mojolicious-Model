@@ -36,7 +36,7 @@ sub count {
 sub records {
     my ($self) = @_;
     my @records = $self->db->iquery( 'SELECT * FROM', $self->table )->hashes;
-    return \@records;
+    return @records;
 }
 
 sub insert {
